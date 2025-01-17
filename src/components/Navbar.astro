@@ -1,0 +1,64 @@
+---
+interface Props {
+	search: boolean;
+  path: string;
+}
+
+const { search, path = "." } = Astro.props;
+---
+<nav class="bg-zinc-800 flex h-12 px-20 max-lg:px-4 justify-between">
+    <div class="flex w-full gap-4 items-center">
+      <a href={path} class="max-sm:h-8 h-full">
+        <img src={`${path}/logo.svg`} class="h-full">
+      </a>
+      {search && <input type="text" id="username" class="m-2 bg-zinc-700 rounded-md px-2 text-white max-sm:flex-1" placeholder="Your username here" onfocusout="updateURL()">
+      <script is:inline>
+        const usernameInput = document.getElementById('username');
+
+        usernameInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+              updateURL()
+            }
+        });
+
+        function updateURL(){
+          if(usernameInput.value.length < 1) return;
+          window.location.href = `?username=${usernameInput.value}`
+        }
+      </script>}
+    </div>
+    <ul class="flex place-items-center gap-4 text-white justify-center max-sm:hidden">
+      <li>
+        <a href={`${path}/`} class="hover:text-zinc-300">Home</a>
+      </li>
+      <li>
+        <a href={`${path}/about`} class="hover:text-zinc-300">About</a>
+      </li>
+      <li>
+        <a href="https://github.com/Cryptizism/skin-overlay/" class="hover:text-zinc-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+        </a>
+      </li>
+    </ul>
+    <button type="button" class="self-center inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2  text-gray-400 hover:bg-gray-700 focus:ring-gray-600" onclick="document.getElementById('mob-nav').classList.toggle('hidden');">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+</nav>
+<ul class="flex place-items-center gap-4 bg-zinc-800 text-white justify-between sm:hidden text-lg hidden" id="mob-nav">
+  <li class="p-2 m-2 bg-zinc-700 rounded-md">
+    <a href="./" class="hover:text-zinc-300">Home</a>
+  </li>
+  <li class="p-2 m-2 bg-zinc-700 rounded-md">
+    <a href="./about" class="hover:text-zinc-300">About</a>
+  </li>
+  <li class="p-2 m-2 bg-zinc-700 rounded-md">
+    <a href="https://github.com/Cryptizism/skin-overlay/" class="hover:text-zinc-300">
+      Contribute
+    </a>
+  </li>
+</ul>
